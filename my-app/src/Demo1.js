@@ -41,6 +41,7 @@ function Table({ columns, data }) {
     headerGroups,
     rows,
     prepareRow,
+
   } = useTable({
     columns,
     data,
@@ -49,15 +50,17 @@ function Table({ columns, data }) {
   // Render the UI for your table
   return (
     <table {...getTableProps()}>
+
       <thead>
-        {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
+        {headerGroups.map(h => (
+          <tr {...h.getHeaderGroupProps()}>
+            {h.headers.map(column => (
               <th {...column.getHeaderProps()}>{column.render('Header')}</th>
             ))}
           </tr>
         ))}
       </thead>
+
       <tbody {...getTableBodyProps()}>
         {rows.map(
           (row, i) => {
@@ -65,12 +68,14 @@ function Table({ columns, data }) {
             return (
               <tr {...row.getRowProps()}>
                 {row.cells.map(cell => {
-                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                  console.log(cell)
+                  return <td class={i} {...cell.getCellProps()}>{cell.render('Cell')}</td>
                 })}
               </tr>
             )}
         )}
       </tbody>
+
     </table>
   )
 }
@@ -78,9 +83,6 @@ function Table({ columns, data }) {
 function Demo1() {
   const columns = React.useMemo(
     () => [
-      {
-        Header: 'Name',
-        columns: [
           {
             Header: 'First Name',
             accessor: 'firstName',
@@ -89,11 +91,6 @@ function Demo1() {
             Header: 'Last Name',
             accessor: 'lastName',
           },
-        ],
-      },
-      {
-        Header: 'Info',
-        columns: [
           {
             Header: 'Age',
             accessor: 'age',
@@ -110,13 +107,34 @@ function Demo1() {
             Header: 'Profile Progress',
             accessor: 'progress',
           },
-        ],
-      },
-    ],
-    []
+    ]
   )
 
-  const data = React.useMemo(() => makeData(20), [])
+
+  const data =
+  [
+    {
+      "firstName": "plate-te7kb",
+      "lastName": "pot-az1er",
+      "age": 2,
+      "visits": 67,
+      "progress": 3,
+      "status": "relationship"
+    },
+    {
+      "firstName": "clothes-n35j5",
+      "lastName": "guidance-clw0c",
+      "age": 9,
+      "visits": 53,
+      "progress": 64,
+      "status": "relationship"
+    }
+  ]
+
+
+
+console.log('xxxx', data)
+
 
   return (
     <Styles>
